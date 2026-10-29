@@ -1,0 +1,5 @@
+{
+  "sources": [
+    { "id": "core", "file": "data/core.json", "name": "7TV Core Rulebook", "short": "Core", "priority": 0 }
+  ]
+}
