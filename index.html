@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7TV Cast Builder</title>
+<meta name="description" content="Build 7TV casts from Stars, Co-Stars, Extras, Vehicles and Units, with ratings, genre and unit checks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='6' width='28' height='20' rx='5' fill='%23b6232a'/%3E%3Ctext x='16' y='22' font-family='Arial Black' font-size='13' text-anchor='middle' fill='white'%3E7TV%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<header class="masthead">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">7TV</span>
+    <span class="brand-name">Cast builder</span>
+  </div>
+  <div class="cast-title">
+    <label for="castName" class="sr-only">Cast name</label>
+    <input id="castName" class="cast-name" placeholder="Untitled cast" autocomplete="off">
+  </div>
+  <div class="ratings-meter" id="ratingsMeter" aria-live="polite">
+    <div class="meter-num"><span id="ratingsTotal">0</span><span class="meter-of">/ <span id="ratingsLimitOut">25</span></span></div>
+    <div class="meter-label">ratings</div>
+    <div class="meter-bar"><i id="meterFill"></i></div>
+  </div>
+</header>
+
+<nav class="mobile-tabs" aria-label="Views">
+  <button data-view="browse" class="on">Casting</button>
+  <button data-view="cast">Your cast <span id="tabCount"></span></button>
+</nav>
+
+<main class="layout">
+  <section class="panel browse" id="browsePanel" aria-label="Profiles">
+    <div class="browse-head">
+      <div class="type-tabs" role="tablist" id="typeTabs">
+        <button role="tab" data-type="star" class="t-star on">Stars</button>
+        <button role="tab" data-type="co-star" class="t-costar">Co-Stars</button>
+        <button role="tab" data-type="extra" class="t-extra">Extras</button>
+        <button role="tab" data-type="vehicle" class="t-vehicle">Vehicles</button>
+        <button role="tab" data-type="unit" class="t-unit">Units</button>
+      </div>
+      <div class="filters">
+        <input id="search" type="search" placeholder="Search profiles, attacks, effects" aria-label="Search">
+        <select id="genreFilter" aria-label="Filter by genre"><option value="">All genres</option></select>
+        <label class="check"><input type="checkbox" id="fitOnly"> Fits my cast</label>
+        <label class="check"><input type="checkbox" id="showAll"> Show other affiliations</label>
+      </div>
+    </div>
+    <ul class="profile-list" id="profileList"></ul>
+  </section>
+
+  <section class="panel cast" id="castPanel" aria-label="Your cast">
+    <div class="cast-settings">
+      <div class="field">
+        <span class="field-label">Affiliation</span>
+        <div class="seg" id="affSeg">
+          <button data-aff="heroic" class="on">Heroic</button>
+          <button data-aff="villainous">Villainous</button>
+          <button data-aff="neutral">Neutral</button>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label" for="ratingsLimit">Ratings limit</label>
+        <input id="ratingsLimit" type="number" min="0" step="1" value="25">
+      </div>
+      <div class="field">
+        <label class="field-label" for="genreCard">Genre card</label>
+        <select id="genreCard"><option value="">None chosen</option></select>
+      </div>
+      <div class="field sources-field">
+        <span class="field-label">Books</span>
+        <div id="sourceToggles" class="source-toggles"></div>
+      </div>
+    </div>
+
+    <div id="castList" class="cast-list"></div>
+
+    <div class="checks" id="checks"></div>
+
+    <div class="cast-actions">
+      <button id="btnShare" class="btn primary">Copy share link</button>
+      <button id="btnText" class="btn">Copy as text</button>
+      <button id="btnPrint" class="btn">Print cards</button>
+      <button id="btnSave" class="btn">Save</button>
+      <button id="btnLoad" class="btn">My casts</button>
+      <button id="btnNew" class="btn ghost">New cast</button>
+    </div>
+  </section>
+</main>
+
+<dialog id="cardDialog" class="card-dialog">
+  <div id="cardDialogBody"></div>
+  <form method="dialog" class="dialog-foot"><button class="btn">Close</button></form>
+</dialog>
+
+<dialog id="unitDialog" class="card-dialog">
+  <div id="unitDialogBody"></div>
+</dialog>
+
+<dialog id="loadDialog" class="card-dialog">
+  <h2 class="dialog-title">My casts</h2>
+  <p class="muted small">Saved in this browser only. Use “Copy share link” to send a cast to someone else.</p>
+  <ul id="savedList" class="saved-list"></ul>
+  <form method="dialog" class="dialog-foot"><button class="btn">Close</button></form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<section id="printArea" class="print-area" aria-hidden="true"></section>
+
+<footer class="site-foot">
+  Unofficial fan tool for <a href="https://crooked-dice.co.uk/" rel="noopener">Crooked Dice’s 7TV</a>. Card fronts are summarised for list building; you’ll need the books for the rules on the back of each card.
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
